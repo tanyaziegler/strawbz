@@ -43,7 +43,7 @@ body {
     background-color: var(--clr-cream-white);
     overflow-x: hidden; /* Prevent horizontal scroll from layout shifts */
     /* Global padding for fixed header - base height approx 90px logo + 10px padding */
-    padding-top: 90px;
+    padding-top: 80px;
 }
 
 a {
@@ -179,7 +179,7 @@ header {
 }
 
 .logo img {
-    height: 90px; /* Logo height */
+    height: 100px; /* Logo height */
     width: auto; /* Maintain aspect ratio */
     filter: drop-shadow(0 2px 3px rgba(0,0,0,0.4)); /* Adds a subtle shadow */
     transition: transform 0.3s ease; /* Smooth hover effect */
