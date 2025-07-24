@@ -1,6 +1,4 @@
 /* Google Fonts Import */
-/* Fredoka for headings: Rounded, friendly, similar to logo font */
-/* Nunito Sans for body: Clean, modern, easy to read */
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Nunito+Sans:wght@300;400;600;700&display=swap');
 
 /* --- Root Variables & Global Styles --- */
@@ -12,9 +10,9 @@
     --clr-leaf-green: hsl(110, 36%, 47%);    /* Fresh green for subtle accents */
     --clr-cream-white: hsl(30, 100%, 98%);   /* Creamy white for text & light backgrounds */
     --clr-light-grey: hsl(30, 20%, 95%);     /* Very light warm grey for alternating sections */
-    --clr-chocolate-dark: hsl(28, 59%, 20%); /* Deep rich chocolate brown */
-    --clr-chocolate-dark-alpha: hsla(28, 59%, 20%, 0.8); /* Added for semi-transparent header */
-   
+
+    /* Alpha version of dark chocolate for header transparency */
+    --clr-chocolate-dark-alpha: hsla(28, 59%, 20%, 0.8);
 
     /* Font Families */
     --ff-heading: 'Fredoka', sans-serif;
@@ -44,7 +42,8 @@ body {
     color: var(--clr-chocolate-dark);
     background-color: var(--clr-cream-white);
     overflow-x: hidden; /* Prevent horizontal scroll from layout shifts */
-    
+    /* Global padding for fixed header - base height approx 90px logo + 10px padding */
+    padding-top: 100px;
 }
 
 a {
@@ -156,46 +155,48 @@ p {
 
 /* --- Header & Navigation --- */
 header {
-    background-color: var(--clr-chocolate-dark-alpha); /* Use the new semi-transparent variable */
-    padding: 0rem 0;
-    position: fixed; /* Changed from sticky to fixed */
+    background-color: var(--clr-chocolate-dark-alpha); /* Semi-transparent for desktop */
+    padding: 0rem 0; /* Padding is handled by logo img */
+    position: fixed;
     top: 0;
-    left: 0; /* Ensures it spans the full width from the left edge */
-    width: 100%; /* Ensures it spans the full width */
-    z-index: 1000; /* Ensure it stays on top of other content */
-  }
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
 
 .nav-wrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Default for desktop: logo left, nav right */
     align-items: center;
-    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    flex-wrap: nowrap; /* Prevent wrapping on desktop */
 }
 
-
-
-
-/* New simplified .logo CSS (replace the original .logo and .logo:hover blocks) */
+/* Logo specific styles */
 .logo {
     display: flex; /* Allows for easy alignment of the image */
     align-items: center; /* Vertically centers the image in the nav */
-    }
+}
 
 .logo img {
-    height: 90px; /* Adjust as needed for your desired size in the nav bar */
+    height: 90px; /* Logo height */
     width: auto; /* Maintain aspect ratio */
-    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.4)); /* Adds a subtle shadow for depth, mimicking the logo's style */
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.4)); /* Adds a subtle shadow */
     transition: transform 0.3s ease; /* Smooth hover effect */
-padding: 0.5rem 0; /* Add padding for clickable area */
+    padding: 0.5rem 0; /* Add padding for clickable area, contributes to header height */
 }
 
 .logo img:hover {
     transform: scale(1.05); /* Slightly enlarge on hover */
 }
+
+/* Nav links styling for desktop */
 nav ul {
     list-style: none;
     display: flex;
-    gap: var(--spacing-sm); /* Space between nav items */
+    gap: var(--spacing-sm);
+    margin: 0;
+    padding: 0;
 }
 
 nav ul li a {
@@ -203,12 +204,12 @@ nav ul li a {
     font-weight: 600;
     padding: 0.5rem 1rem;
     border-radius: 5px;
-    position: relative; /* For underline effect */
+    position: relative;
     transition: color 0.3s ease, background-color 0.3s ease;
 }
 
 nav ul li a:hover,
-nav ul li a.active { /* 'active' class can be added by JS for current section */
+nav ul li a.active {
     color: var(--clr-strawberry-red);
     background-color: rgba(255, 255, 255, 0.1);
 }
@@ -226,16 +227,19 @@ nav ul li a.active { /* 'active' class can be added by JS for current section */
     z-index: 0; /* Below the header */
 }
 
-.hero-banner::before { /* Overlay for better text readability */
+/* Remove the hero-banner::before overlay if you don't want it */
+/*
+.hero-banner::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.4); /* Dark overlay */
-    z-index: -1; /* Behind content */
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: -1;
 }
+*/
 
 .hero-content {
     max-width: 800px;
@@ -339,7 +343,6 @@ nav ul li a.active { /* 'active' class can be added by JS for current section */
 }
 
 /* --- Testimonials Section (Simple Carousel) --- */
-/* For a true carousel, JS is needed. This is a basic styling. */
 .testimonial-carousel {
     display: flex;
     overflow-x: auto; /* Enable horizontal scrolling if items exceed width */
@@ -486,15 +489,13 @@ nav ul li a.active { /* 'active' class can be added by JS for current section */
 .form-group textarea:focus {
     border-color: var(--clr-strawberry-red);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(var(--clr-strawberry-red-rgb), 0.2); /* Soft red glow */
+    box-shadow: 0 0 0 3px rgba(var(--clr-strawberry-red-rgb), 0.2);
 }
 
 /* Helper for the rgba() above, convert HSL to RGB */
-/* Using dummy for demonstration, usually calculated by preprocessor or JS */
 :root {
     --clr-strawberry-red-rgb: 222, 59, 81; /* Approx RGB for hsl(350, 78%, 55%) */
 }
-
 
 .contact-form textarea {
     resize: vertical; /* Allow vertical resizing only */
@@ -526,133 +527,109 @@ footer .fa-heart {
 }
 
 /* --- Responsive Adjustments --- */
+
+/* Desktop & larger tablets (min-width: 768px) */
 @media (min-width: 768px) {
+    /* Reset header background for desktop (semi-transparent) */
+    header {
+        background-color: var(--clr-chocolate-dark-alpha);
+    }
+    /* Ensure nav is visible for desktop */
+    nav {
+        display: block; /* Show the nav on desktop */
+    }
     .nav-wrapper {
         flex-wrap: nowrap; /* Prevent nav items from wrapping on wider screens */
-    }
-body {
-        padding-top: 90px; /* Standard padding for fixed header */
+        justify-content: space-between; /* Logo left, Nav right */
     }
 
-    /* About, Services Grid for larger screens */
-    .about-grid,
-    .services-grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 columns on tablet and up */
+    body {
+        padding-top: 100px; /* Standard padding for fixed header on desktop */
     }
-
-    /* Contact Grid layout on larger screens */
+    /* Existing desktop grid layouts */
+    .about-grid, .services-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
     .contact-grid {
-        grid-template-columns: 1fr 2fr; /* Contact details on left, form on right */
+        grid-template-columns: 1fr 2fr;
         align-items: flex-start;
     }
-
-    .contact-details,
-    .contact-form-wrapper {
-        padding: var(--spacing-lg); /* More padding on larger screens */
+    .contact-details, .contact-form-wrapper {
+        padding: var(--spacing-lg);
     }
-
-    /* Gallery Adjustment for larger screens */
     .gallery-grid {
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
-    
-    .testimonial-carousel {
-        /* On larger screens, maybe show 2 elements if space allows, or use JS for full slider */
-        /* For now, just ensuring it looks good when wider */
-        max-width: 900px; /* Limit testimonial width */
-        margin-left: auto;
-        margin-right: auto;
-    }
     .testimonial-item {
-        flex: 0 0 45%; /* Show two items in a row if space allows, with gap */
+        flex: 0 0 45%;
     }
 }
 
+/* Larger desktop adjustments (min-width: 1024px) */
 @media (min-width: 1024px) {
-    /* Larger desktop adjustments */
-    body {
-        font-size: 1.05rem; /* Slightly larger body font */
-    }
-
     h2 {
         font-size: 3.5rem;
     }
-
     .section-padded {
-        padding: var(--spacing-lg) /* Adjusted padding for very wide screens */
+        padding: var(--spacing-lg);
     }
-    
     .services-grid {
-        grid-template-columns: repeat(4, 1fr); /* 4 columns for services on large displays */
+        grid-template-columns: repeat(4, 1fr);
     }
-
     .gallery-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* More columns on wider displays */
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
-
     .testimonial-item {
-        flex: 0 0 30%; /* Show three items if possible */
+        flex: 0 0 30%;
     }
-
 }
 
+/* Mobile specific styles (max-width: 767px) */
 @media (max-width: 767px) {
-    /* Specific mobile adjustments */
-/* Responsive adjustments for body padding */
-@media (max-width: 767px) {
-    body {
-        padding-top: 130px; /* Increased padding for stacked mobile nav to avoid content being hidden */
+    /* Solid background for header on mobile */
+    header {
+        background-color: var(--clr-chocolate-dark);
     }
+
+    /* Hide the entire navigation on mobile */
+    nav {
+        display: none;
+    }
+
+    /* Center the logo within the nav-wrapper on mobile when nav is hidden */
     .nav-wrapper {
-        flex-direction: column; /* Stack logo and nav vertically */
-        text-align: center;
+        justify-content: center; /* Centers the logo horizontally */
+        flex-wrap: nowrap; /* Avoids wrapping the logo if it were to */
+        padding: 0 var(--spacing-sm);
     }
 
-    nav ul {
-        flex-direction: column; /* Stack nav links vertically */
-        width: 100%;
-        margin-top: 1rem;
+    /* Adjust body padding for reduced header height on mobile (only logo remains) */
+    body {
+        padding-top: 100px; /* Consistent with desktop, or adjust to fit exactly */
     }
 
-    nav ul li {
-        width: 100%;
-    }
-    nav ul li a {
-        display: block;
-        padding: 0.8rem 1rem;
-        text-align: center;
-        background-color: rgba(255, 255, 255, 0.05); /* Light background for mobile links */
-    }
-
+    /* General responsive adjustments for content that was previously in a nested mobile query */
     .hero-content {
-        padding: 0 1rem; /* Adjust padding for smaller screens */
+        padding: 0 1rem;
     }
-
     h1 {
-        font-size: 2.5rem; /* Cap hero title size on small screens */
+        font-size: 2.5rem;
     }
-
     h2 {
         font-size: 2rem;
     }
-
-    .about-grid,
-    .services-grid {
+    .about-grid, .services-grid {
         grid-template-columns: 1fr; /* Single column on mobile */
     }
-
     .contact-grid {
         grid-template-columns: 1fr; /* Force stacking on mobile */
     }
-    
-    .contact-details,
-    .contact-form-wrapper {
+    .contact-details, .contact-form-wrapper {
         padding: var(--spacing-md);
     }
     .social-icons {
         justify-content: center; /* Center social icons on mobile */
     }
-
     .testimonial-item {
         flex: 0 0 90%; /* Almost full width for testimonials on mobile */
     }
