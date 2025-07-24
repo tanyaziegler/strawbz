@@ -43,7 +43,7 @@ body {
     background-color: var(--clr-cream-white);
     overflow-x: hidden; /* Prevent horizontal scroll from layout shifts */
     /* Global padding for fixed header - base height approx 90px logo + 10px padding */
-    padding-top: 100px;
+    padding-top: 90px;
 }
 
 a {
